@@ -3,23 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Все ссылки — профиль</title>
+  <title>Мои ссылки</title>
   <meta name="description" content="Одна ссылка на все мои соцсети и проекты." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0b0b0f" id="theme-color" />
 
-  <!-- OpenGraph / Twitter -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Все ссылки — профиль" />
+  <meta property="og:title" content="Мои ссылки" />
   <meta property="og:description" content="Одна ссылка на все мои соцсети и проекты." />
   <meta property="og:url" content="https://YOUR-USERNAME.github.io/" />
-  <meta property="og:image" content="assets/og-banner.png" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:image" content="assets/og.png" />
 
-  <meta name="theme-color" content="#0b0b0f" id="theme-color" />
-  <link rel="icon" href="assets/avatar.jpg" />
-  <meta name="color-scheme" content="light dark" />
-  <link rel="preload" href="style.css" as="style" />
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+  <link rel="icon" href="assets/favicon.svg" />
+  <link rel="preload" href="app.css" as="style" />
+  <link rel="stylesheet" href="app.css" />
+  <script defer src="app.js"></script>
 
   <!-- Schema.org -->
   <script type="application/ld+json">
@@ -34,32 +33,41 @@
   </script>
 </head>
 <body>
-  <div class="bg"></div>
+  <!-- Фон -->
+  <div class="bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="grain"></div>
+  </div>
 
   <main class="wrap">
-    <section class="card">
-      <div class="profile">
-        <img id="avatar" class="avatar" src="assets/avatar.jpg" alt="Аватар" />
-        <div class="who">
-          <h1 id="name">Имя Фамилия <span id="verified" class="badge" hidden>✔︎</span></h1>
-          <div class="meta">
-            <span id="username" class="muted">@username</span>
-            <span id="location" class="muted" hidden>· Город</span>
-          </div>
-          <p id="bio" class="bio">Короткое описание профиля.</p>
+    <!-- Профиль -->
+    <section class="card profile">
+      <img id="avatar" class="avatar" src="assets/avatar.jpg" alt="Аватар" width="88" height="88" />
+      <div class="who">
+        <h1 class="name">
+          <span id="name">Имя Фамилия</span>
+          <span id="verified" class="badge" hidden>✔︎</span>
+        </h1>
+        <div class="meta">
+          <span id="username" class="muted">@username</span>
+          <span id="location" class="muted" hidden>· Город</span>
         </div>
-      </div>
+        <p id="bio" class="bio">Короткое описание профиля.</p>
 
-      <div class="actions">
-        <button id="copyLink" class="btn">Скопировать ссылку</button>
-        <button id="toggleTheme" class="btn secondary" title="Сменить тему">🌓</button>
+        <div class="actions">
+          <button id="share" class="btn">Поделиться</button>
+          <button id="copy" class="btn secondary">Скопировать ссылку</button>
+          <button id="theme" class="btn ghost" title="Сменить тему">🌓</button>
+        </div>
       </div>
     </section>
 
+    <!-- Ссылки -->
     <ul id="links" class="links"></ul>
 
     <footer class="footer">
-      <span class="muted">Сделано на GitHub Pages · <a class="muted" href="https://github.com/">GitHub</a></span>
+      <span class="muted">Работает на GitHub Pages</span>
     </footer>
   </main>
 </body>
