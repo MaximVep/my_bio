@@ -1,49 +1,52 @@
-<!doctype html>
-<html lang="ru" class="theme-pink">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Мой био • links</title>
-    <meta name="description" content="Лаконичный link-in-bio в стиле guns.lol: только иконки, неоновые темы и кастомный фон." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-    <!-- Иконки: Tabler Icons (легкие, открытые) -->
-    <link href="https://unpkg.com/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твоё Имя - Био</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Подключаем иконки с Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
-<!-- Панель управления темами и фоном -->
-<div class="controls">
-    <div class="swatches" role="group" aria-label="Темы">
-        <button class="swatch swatch-acid" data-theme="acid" title="Кислотный"></button>
-        <button class="swatch swatch-pink" data-theme="pink" title="Розово‑фиолетовый"></button>
-        <button class="swatch swatch-neon" data-theme="neon" title="Неоновый"></button>
+<body class="theme-acid"> <!-- Тема по умолчанию -->
+
+    <!-- ======== КАРТОЧКА С БИО ======== -->
+    <div class="card">
+        <!-- !! ИЗМЕНИТЕ ЭТО: Укажите ссылку на ваш аватар -->
+        <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Аватар" class="avatar">
+
+        <!-- !! ИЗМЕНИТЕ ЭТО: Ваше имя или никнейм -->
+        <h1>Твоё Имя</h1>
+
+        <!-- !! ИЗМЕНИТЕ ЭТО: Ваше короткое био -->
+        <p>Программист / Дизайнер / Мечтатель</p>
+
+        <!-- !! ИЗМЕНИТЕ ЭТО: Добавьте/удалите/измените ссылки на свои соцсети -->
+        <div class="social-icons">
+            <a href="https://github.com/your-username" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://t.me/your-username" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+            <a href="https://vk.com/your-username" target="_blank" aria-label="VK"><i class="fab fa-vk"></i></a>
+            <a href="mailto:your-email@example.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            <!-- Чтобы добавить новую иконку, найдите её на Font Awesome и вставьте сюда по аналогии -->
+        </div>
     </div>
-    <div class="bg-tools" role="group" aria-label="Фон">
-        <button id="bgUploadBtn" class="circle-btn" title="Загрузить фон (файл)">
-            <i class="ti ti-photo"></i>
-        </button>
-        <button id="bgLinkBtn" class="circle-btn" title="Фон по ссылке (URL)">
-            <i class="ti ti-link"></i>
-        </button>
-        <button id="bgResetBtn" class="circle-btn" title="Сбросить кастомный фон">
-            <i class="ti ti-trash"></i>
-        </button>
-        <input id="bgUploadInput" type="file" accept="image/*" hidden />
+
+    <!-- ======== ПАНЕЛЬ УПРАВЛЕНИЯ ТЕМОЙ ======== -->
+    <div class="controls-panel">
+        <!-- Пресеты тем -->
+        <div class="theme-switcher">
+            <button data-theme="theme-acid" aria-label="Кислотная тема"></button>
+            <button data-theme="theme-pink-purple" aria-label="Розово-фиолетовая тема"></button>
+            <button data-theme="theme-neon" aria-label="Неоновая тема"></button>
+        </div>
+        <!-- Кастомный фон -->
+        <div class="custom-bg-controls">
+            <input type="text" id="custom-bg-input" placeholder="URL картинки для фона...">
+            <button id="apply-bg-btn">OK</button>
+            <button id="reset-bg-btn">Сброс</button>
+        </div>
     </div>
-</div>
 
-<!-- Контент -->
-<main class="profile">
-    <img id="avatar" class="avatar" src="assets/images/avatar.jpg" alt="Аватар" />
-    <h1 id="name" class="name">Ваш ник</h1>
-    <p id="bio" class="bio">Короткое био — кто вы и чем занимаетесь</p>
-
-    <!-- Только иконки-ссылки -->
-    <ul id="links" class="icon-list" aria-label="Ссылки"></ul>
-</main>
-
-<script src="js/app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
