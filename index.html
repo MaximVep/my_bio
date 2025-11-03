@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="auto">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Мои ссылки</title>
   <meta name="description" content="Одна ссылка на все мои соцсети и проекты." />
-  <meta name="color-scheme" content="light dark" />
+  <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#0b0b0f" id="theme-color" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Мои ссылки" />
   <meta property="og:description" content="Одна ссылка на все мои соцсети и проекты." />
-  <meta property="og:url" content="https://mozgiq.github.io/my_bio/" />
+  <meta property="og:url" content="https://YOUR-USERNAME.github.io/" />
   <meta property="og:image" content="assets/og-banner.png" />
 
   <link rel="icon" href="assets/favicon.svg" />
@@ -21,12 +21,12 @@
   <script defer src="app.js"></script>
 
   <!-- Schema.org -->
-  <script type="application/ld+json">
+  <script type="application/ld++json">
   {
     "@context":"https://schema.org",
     "@type":"Person",
     "name":"Профиль",
-    "url":"https://mozgiq.github.io/my_bio/",
+    "url":"https://YOUR-USERNAME.github.io/",
     "image":"https://YOUR-USERNAME.github.io/assets/avatar.jpg",
     "sameAs":[]
   }
@@ -44,7 +44,7 @@
   <main class="wrap">
     <!-- Профиль -->
     <section class="card profile">
-      <img id="avatar" class="avatar" src="assets/avatar.jpg" alt="Аватар" width="88" height="88" />
+      <img id="avatar" class="avatar" src="assets/avatar.jpg" alt="Аватар" width="104" height="104" />
       <div class="who">
         <h1 class="name">
           <span id="name">Имя Фамилия</span>
@@ -59,7 +59,7 @@
         <div class="actions">
           <button id="share" class="btn">Поделиться</button>
           <button id="copy" class="btn secondary">Скопировать ссылку</button>
-          <button id="theme" class="btn ghost" title="Сменить тему">🌓</button>
+          <!-- Кнопку темы убрали -->
         </div>
       </div>
     </section>
@@ -68,10 +68,8 @@
     <ul id="links" class="links"></ul>
 
     <footer class="footer">
-      <span class="muted">Работает на GitHub Pages | 2025 год</span>
+      <span class="muted">Работает на GitHub Pages</span>
     </footer>
   </main>
 </body>
 </html>
-
-
