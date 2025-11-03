@@ -80,13 +80,32 @@ body{
 .btn.secondary{background:transparent; color:var(--text); border:1px solid var(--card-border)}
 .btn.ghost{background:transparent; color:var(--text); border:1px dashed var(--card-border)}
 
+/* Быстрые ссылки (эмодзи) */
+.emoji-bar{
+  list-style:none; margin:0; padding:2px; display:flex; gap:10px; overflow:auto;
+}
+.emoji-bar li{flex:0 0 auto}
+.emoji-bar a{
+  display:grid; place-items:center;
+  width:52px; height:52px; border-radius:14px;
+  font-size:26px; text-decoration:none;
+  color:var(--text);
+  border:1px solid var(--card-border);
+  background:linear-gradient(0deg, var(--tint, rgba(124,58,237,.12)), var(--tint, rgba(124,58,237,.12))), var(--card);
+  transition:transform .06s ease, border-color .2s ease, filter .2s ease;
+}
+.emoji-bar a:hover{transform:translateY(-1px); border-color:var(--ring); filter:saturate(120%)}
+@media (max-width:500px){
+  .emoji-bar a{width:48px;height:48px;font-size:24px}
+}
+
 /* Ссылки */
 .links{list-style:none; margin:0; padding:0; display:grid; gap:12px}
 .links li a{
   --brand:#7c3aed;
   display:flex; gap:12px; align-items:center; padding:14px 16px; border-radius:16px;
   text-decoration:none; color:var(--text);
-  background:linear-gradient(0deg, rgba(124,58,237,.14), rgba(124,58,237,.14)), var(--card);
+  background:linear-gradient(0deg, var(--tint, rgba(124,58,237,.14)), var(--tint, rgba(124,58,237,.14))), var(--card);
   border:1px solid var(--card-border);
   transition:transform .06s ease, border-color .2s ease, background .2s ease, filter .2s ease;
 }
@@ -95,17 +114,8 @@ body{
 .links img.icon{width:24px; height:24px; display:block}
 .links .l{font-weight:700; font-size:15px}
 
-/* Брендовый цвет подставляется из data-brand */
-.links li a[data-brand]{background:var(--card)}
-.links li a[data-brand]::before{
-  content:""; position:absolute; inset:0; z-index:-1; border-radius:16px;
-}
-.links li a[data-brand]{position:relative}
-.links li a[data-brand]{ /* подмешиваем цвет поверх карточки */
-  background:
-    linear-gradient(0deg, var(--tint, rgba(124,58,237,.14)), var(--tint, rgba(124,58,237,.14))),
-    var(--card);
-}
+/* Брендовый цвет подмешивается поверх карточки */
+.links li a[data-brand]{position:relative; background:linear-gradient(0deg, var(--tint, rgba(124,58,237,.14)), var(--tint, rgba(124,58,237,.14))), var(--card)}
 
 .footer{display:flex; justify-content:center; margin-top:8px; font-size:13px}
 .muted{color:var(--muted)}
