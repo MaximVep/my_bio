@@ -1,0 +1,15 @@
+{
+  "name": "Ваш ник",
+  "bio": "Короткое био — кто вы и чем занимаетесь",
+  "avatar": "assets/images/avatar.jpg",
+  "theme": "pink",
+  "background": "",
+  "links": [
+    { "type": "telegram", "url": "https://t.me/username" },
+    { "type": "instagram", "url": "https://instagram.com/username" },
+    { "type": "x", "url": "https://x.com/username" },
+    { "type": "github", "url": "https://github.com/username" },
+    { "type": "youtube", "url": "https://youtube.com/@username" },
+    { "type": "email", "url": "mailto:you@example.com" }
+  ]
+}
