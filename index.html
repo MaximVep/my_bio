@@ -1,52 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Твоё Имя - Био</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Подключаем иконки с Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Мой био</title>
+  <meta name="theme-color" content="#0a0a0f" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
-<body class="theme-acid"> <!-- Тема по умолчанию -->
+<body class="theme-acid">
+  <!-- Иконка настроек -->
+  <button id="settingsBtn" class="floating-btn" aria-label="Открыть настройки" title="Настройки">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <path d="M10.325 4.317a1 1 0 0 1 1.35-.436l.555.277a2 2 0 0 0 1.801 0l.555-.277a1 1 0 0 1 1.351.436l.388.673a2 2 0 0 0 1.299.95l.746.186a1 1 0 0 1 .757.97v.77a2 2 0 0 0 .442 1.26l.494.616a1 1 0 0 1 0 1.246l-.494.616a2 2 0 0 0-.442 1.26v.77a1 1 0 0 1-.757.97l-.746.186a2 2 0 0 0-1.299.95l-.388.673a1 1 0 0 1-1.351.436l-.555-.277a2 2 0 0 0-1.801 0l-.555.277a1 1 0 0 1-1.35-.436l-.389-.673a2 2 0 0 0-1.298-.95l-.747-.186a1 1 0 0 1-.756-.97v-.77a2 2 0 0 0-.442-1.26l-.494-.616a1 1 0 0 1 0-1.246l.494-.616a2 2 0 0 0 .442-1.26v-.77a1 1 0 0 1 .756-.97l.747-.186a2 2 0 0 0 1.298-.95l.389-.673zM12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" fill="currentColor"/>
+    </svg>
+  </button>
 
-    <!-- ======== КАРТОЧКА С БИО ======== -->
-    <div class="card">
-        <!-- !! ИЗМЕНИТЕ ЭТО: Укажите ссылку на ваш аватар -->
-        <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Аватар" class="avatar">
-
-        <!-- !! ИЗМЕНИТЕ ЭТО: Ваше имя или никнейм -->
-        <h1>Твоё Имя</h1>
-
-        <!-- !! ИЗМЕНИТЕ ЭТО: Ваше короткое био -->
-        <p>Программист / Дизайнер / Мечтатель</p>
-
-        <!-- !! ИЗМЕНИТЕ ЭТО: Добавьте/удалите/измените ссылки на свои соцсети -->
-        <div class="social-icons">
-            <a href="https://github.com/your-username" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="https://t.me/your-username" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-            <a href="https://vk.com/your-username" target="_blank" aria-label="VK"><i class="fab fa-vk"></i></a>
-            <a href="mailto:your-email@example.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-            <!-- Чтобы добавить новую иконку, найдите её на Font Awesome и вставьте сюда по аналогии -->
-        </div>
+  <!-- Панель настроек -->
+  <div id="settingsPanel" class="settings-panel" hidden>
+    <div class="panel-header">
+      <strong>Настройки</strong>
+      <button id="closeSettings" class="icon-only" aria-label="Закрыть">
+        ✕
+      </button>
     </div>
 
-    <!-- ======== ПАНЕЛЬ УПРАВЛЕНИЯ ТЕМОЙ ======== -->
-    <div class="controls-panel">
-        <!-- Пресеты тем -->
-        <div class="theme-switcher">
-            <button data-theme="theme-acid" aria-label="Кислотная тема"></button>
-            <button data-theme="theme-pink-purple" aria-label="Розово-фиолетовая тема"></button>
-            <button data-theme="theme-neon" aria-label="Неоновая тема"></button>
-        </div>
-        <!-- Кастомный фон -->
-        <div class="custom-bg-controls">
-            <input type="text" id="custom-bg-input" placeholder="URL картинки для фона...">
-            <button id="apply-bg-btn">OK</button>
-            <button id="reset-bg-btn">Сброс</button>
-        </div>
+    <div class="panel-section">
+      <div class="label">Тема</div>
+      <div class="theme-swatches">
+        <button class="swatch" data-theme="acid" title="Кислотная"></button>
+        <button class="swatch" data-theme="pinkpurple" title="Розово‑фиолетовая"></button>
+        <button class="swatch" data-theme="neon" title="Неоновая"></button>
+      </div>
     </div>
 
-    <script src="script.js"></script>
+    <div class="panel-section">
+      <div class="label">Кастомный фон</div>
+      <div class="bg-controls">
+        <input id="bgUrl" type="url" placeholder="https://ссылка-на-фон.jpg" />
+        <div class="row">
+          <label class="file-label">
+            <input id="bgFile" type="file" accept="image/*" />
+            Загрузить файл
+          </label>
+          <button id="bgApplyUrl" class="primary">Применить</button>
+        </div>
+        <button id="bgReset" class="ghost">Сбросить фон</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Контент -->
+  <main class="wrap">
+    <section class="card">
+      <div class="avatar">
+        <img id="avatar" src="assets/img/avatar.jpg" alt="Аватар" />
+      </div>
+      <h1 id="name">Ваше имя</h1>
+      <p id="handle" class="muted">@вашник</p>
+      <p id="bio" class="bio">Короткое описание о себе, чем занимаетесь, чем можете быть полезны.</p>
+
+      <!-- Только иконки ссылок -->
+      <ul id="links" class="links" aria-label="Ссылки"></ul>
+    </section>
+  </main>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
