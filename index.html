@@ -189,7 +189,10 @@
 </footer>
 
 <script>
-  // ========= ПРОФИЛЬ =========
+  // URL файла с глобальной конфигурацией (лежит рядом в репозитории)
+  const CONFIG_URL = "./config.json";
+
+  // ========= ПРОФИЛЬ ПО УМОЛЧАНИЮ (fallback) =========
   window.PROFILE = {
     name: "MoZGi",
     username: "maxvanila",
@@ -197,44 +200,28 @@
     location: "Moscow, RU",
     avatar: "https://i.pravatar.cc/240?img=68",
 
-    theme: {
-      preset: "pinkviolet", // acid | pinkviolet | neon | ""
-      accent: null,
-      gradient: null
-    },
-
+    theme: { preset: "pinkviolet", accent: null, gradient: null },
     background: {
       image: "https://images.unsplash.com/photo-1552083375-1447ce886485?q=80&w=1920&auto=format&fit=crop",
-      video: null,
-      blur: 8,
-      opacity: 0.9,
-      saturate: 1.1,
-      fit: "cover"
+      video: null, blur: 8, opacity: 0.9, saturate: 1.1, fit: "cover"
     },
-
-    behavior: {
-      persistAvatar: true
-    },
-
-    ui: {
-      iconSize: 64,
-      iconRadius: 16,
-      avatarRadius: 20,
-      gridMin: 82,
-      showLabels: true
-    },
+    behavior: { persistAvatar: false }, // локальный аплоад аватара не будет «перекрывать» глобальный
+    ui: { iconSize: 64, iconRadius: 16, avatarRadius: 20, gridMin: 82, showLabels: true },
 
     links: [
       { label: "Telegram", url: "https://t.me/maxvanila", icon: "✈️", color: "#229ED9" },
+      { label: "Insta",    url: "https://instagram.com/maxvanila", icon: "📷", color: "#E1306C" },
       { label: "VK",       url: "https://vk.com/maxvanila", icon: "🟦", color: "#0077FF" },
       { label: "GitHub",   url: "https://github.com/maxvanila", icon: "💻", color: "#333333" },
       { label: "YouTube",  url: "https://youtube.com/@maxvanila", icon: "▶️", color: "#FF0033" },
+      { label: "Сайт",     url: "https://example.com", icon: "🌐", color: "#16a34a" },
+      { label: "Email",    url: "mailto:me@example.com", icon: "✉️", color: "#f97316" }
     ]
   };
 </script>
 
 <script>
-  (function(){
+  (async function(){
     const THEMES = {
       acid:       { accent:"#b4ff1f", gradient:["#00ffd1","#b4ff1f"] },
       pinkviolet: { accent:"#ff4db8", gradient:["#ff4db8","#7c3aed"] },
@@ -256,16 +243,21 @@
     const linksEl = $("#links");
     const footerLocation = $("#location");
 
-    // ========== INIT ==========
+    // INIT: порядок приоритетов
+    // 1) localStorage (кэш)
     loadFromStorage();
-    loadFromURL(); // при наличии p — перезапишет профиль, сохранит и почистит URL
+    // 2) Глобальный конфиг из репозитория (для всех)
+    await loadFromRemote();
+    // 3) Конфиг из ссылки (?p=...), сохраняем локально и чистим URL
+    loadFromURL();
+
     applyTheme();
     applyBackground();
     applyUI();
     renderProfile();
     bindAvatarEdit();
 
-    // ========== THEME ==========
+    // THEME
     function applyTheme(){
       const t = profile.theme || {};
       const presetObj = t.preset && THEMES[t.preset] ? THEMES[t.preset] : null;
@@ -281,7 +273,7 @@
       if (themeMeta) themeMeta.setAttribute("content", accent);
     }
 
-    // ========== BACKGROUND ==========
+    // BACKGROUND
     function applyBackground(){
       const bg = profile.background || {};
       customBg.innerHTML = "";
@@ -305,7 +297,7 @@
       }
     }
 
-    // ========== UI VARS ==========
+    // UI
     function applyUI(){
       const ui = profile.ui || {};
       const root = document.documentElement;
@@ -316,11 +308,11 @@
       root.style.setProperty("--labels-visible", ui.showLabels ? "1" : "0");
     }
 
-    // ========== META ==========
+    // META
     function setMeta(name, content){ const el=document.querySelector(`meta[name="${name}"]`); if(el) el.setAttribute("content", content); }
     function setOG(property, content){ const el=document.querySelector(`meta[property="${property}"]`); if(el) el.setAttribute("content", content); }
 
-    // ========== RENDER ==========
+    // RENDER
     function renderProfile(){
       const savedAvatar = profile.behavior?.persistAvatar ? localStorage.getItem("profile_avatar") : null;
       avatarEl.src = savedAvatar || profile.avatar || "";
@@ -362,7 +354,7 @@
       });
     }
 
-    // ========== AVATAR EDIT ==========
+    // AVATAR (локально)
     function bindAvatarEdit(){
       const input = avatarInput;
       function handleFile(file){
@@ -383,7 +375,7 @@
       avatarEl.addEventListener("drop", e=>{ e.preventDefault(); handleFile(e.dataTransfer?.files?.[0]); });
     }
 
-    // ========== STORAGE / SHARE ==========
+    // STORAGE / SHARE
     function save(){
       try { localStorage.setItem("profile_data", JSON.stringify(profile)); } catch {}
     }
@@ -392,6 +384,17 @@
         const raw = localStorage.getItem("profile_data");
         if (!raw) return false;
         profile = normalize(JSON.parse(raw));
+        return true;
+      } catch { return false; }
+    }
+
+    async function loadFromRemote(){
+      try{
+        const res = await fetch(CONFIG_URL, { cache: "no-cache" });
+        if (!res.ok) return false;
+        const data = await res.json();
+        profile = normalize(data);
+        save(); // кэшируем локально
         return true;
       } catch { return false; }
     }
@@ -407,7 +410,7 @@
         const json = b64ToUtf8(p);
         const data = JSON.parse(json);
         profile = normalize(data);
-        save(); // автосохранение для посетителя
+        save(); // сохраняем для посетителя
 
         // убрать только p, остальные параметры и hash оставить
         url.searchParams.delete("p");
@@ -420,7 +423,7 @@
       }
     }
 
-    // ========== HELPERS ==========
+    // HELPERS
     function deepClone(x){ return JSON.parse(JSON.stringify(x)); }
     function normalize(data){
       const out = deepClone(DEFAULT);
