@@ -1,0 +1,223 @@
+:root {
+  --text: #e8f1ff;
+  --muted: #b7c3d1;
+  --card: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.12);
+  --accent: #ff2cdf;
+  --accent-2: #7a5cff;
+  --bg-gradient: radial-gradient(1200px circle at 20% 10%, rgba(255, 44, 223, 0.14), transparent 40%),
+                  radial-gradient(1000px circle at 80% 90%, rgba(122, 92, 255, 0.14), transparent 40%),
+                  linear-gradient(135deg, #0a0012 0%, #000000 100%);
+  --ring-blur: 16px;
+  --icon-size: 28px;
+  --tile: 68px;
+}
+
+/* Темы */
+.theme-acid {
+  --text: #eaffef;
+  --muted: #baffc9;
+  --accent: #39ff14;
+  --accent-2: #00ffd1;
+  --bg-gradient: radial-gradient(1200px circle at 15% 10%, rgba(0, 255, 153, 0.18), transparent 40%),
+                  radial-gradient(1000px circle at 85% 80%, rgba(57, 255, 20, 0.14), transparent 42%),
+                  linear-gradient(135deg, #001f1a 0%, #000000 100%);
+}
+
+.theme-pink {
+  --text: #ffeaff;
+  --muted: #ffb8ff;
+  --accent: #ff2cdf;
+  --accent-2: #7a5cff;
+  --bg-gradient: radial-gradient(1100px circle at 25% 15%, rgba(255,44,223,0.16), transparent 42%),
+                  radial-gradient(900px circle at 80% 85%, rgba(122,92,255,0.14), transparent 45%),
+                  linear-gradient(135deg, #0b0014 0%, #000000 100%);
+}
+
+.theme-neon {
+  --text: #e9fbff;
+  --muted: #b0f4ff;
+  --accent: #00e7ff;
+  --accent-2: #9d2fff;
+  --bg-gradient: radial-gradient(1200px circle at 20% 10%, rgba(0,231,255,0.16), transparent 42%),
+                  radial-gradient(900px circle at 80% 90%, rgba(157,47,255,0.14), transparent 45%),
+                  linear-gradient(135deg, #000516 0%, #000000 100%);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Кастомный фон поверх градиента */
+body.has-custom-bg {
+  background-image: var(--bg-gradient), var(--bg-image, none);
+  background-size: cover, cover;
+  background-position: center center, center center;
+  background-attachment: fixed, fixed;
+}
+
+/* Центровка профиля */
+.profile {
+  max-width: 640px;
+  width: 100%;
+  margin: 6.5rem auto 3rem;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: inline-block;
+  border: 1px solid var(--border);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,0.04) inset,
+    0 0 var(--ring-blur) 0 var(--accent);
+  background: rgba(255,255,255,0.02);
+}
+
+.name {
+  margin: 18px 0 8px;
+  font-weight: 800;
+  font-size: 1.8rem;
+  letter-spacing: 0.2px;
+  text-shadow: 0 0 14px rgba(255,255,255,0.06), 0 0 22px var(--accent);
+}
+
+.bio {
+  margin: 0 auto 18px;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.4;
+}
+
+/* Иконки-ссылки */
+.icon-list {
+  margin: 22px auto 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--tile), 1fr));
+  gap: 14px;
+  max-width: 520px;
+}
+
+.icon-list li { display: contents; }
+
+.icon-tile {
+  width: var(--tile);
+  height: var(--tile);
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: var(--text);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid var(--border);
+  box-shadow:
+    0 2px 30px rgba(0,0,0,0.35),
+    0 0 0 0 rgba(0,0,0,0),
+    0 0 20px 0 transparent;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+
+.icon-tile::after {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.12), transparent 50%);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.icon-tile:hover::after { opacity: 1; }
+.icon-tile:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow:
+    0 8px 40px rgba(0,0,0,0.45),
+    0 0 24px -4px var(--accent),
+    0 0 14px 0 rgba(255,255,255,0.04) inset;
+}
+
+.icon-tile .ti {
+  font-size: var(--icon-size);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 70%, transparent));
+}
+
+/* Панель управления */
+.controls {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 10;
+  pointer-events: none; /* кликаются только кнопки внутри */
+}
+
+.swatches, .bg-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.swatch {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent);
+  cursor: pointer;
+}
+
+.theme-acid .swatch-acid,
+.theme-pink .swatch-pink,
+.theme-neon .swatch-neon {
+  outline: 2px solid rgba(255,255,255,0.5);
+  box-shadow: 0 0 16px var(--accent);
+}
+
+.circle-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  display: grid; place-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 18px rgba(0,0,0,0.35);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.circle-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.45), 0 0 18px -4px var(--accent);
+}
+
+.circle-btn .ti { font-size: 20px; }
+
+/* Адаптив */
+@media (max-width: 480px) {
+  .profile { margin-top: 6rem; }
+  .icon-list { gap: 12px; }
+  .avatar { width: 108px; height: 108px; }
+}
