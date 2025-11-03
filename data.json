@@ -1,11 +1,19 @@
 {
   "site": {
-    "title": "MoZGi",
+    "title": "Имя — все ссылки",
     "description": "Одна ссылка на все мои соцсети и проекты.",
     "theme": "auto",
     "accentColor": "#7c3aed",
     "shareUrl": "https://YOUR-USERNAME.github.io/",
-    "ogImage": "assets/og.gif"
+    "ogImage": "assets/og-banner.png",
+
+    "background": {
+      "image": "assets/bg.gif",
+      "fit": "cover",
+      "position": "center",
+      "overlay": 0.2,
+      "blur": 0
+    }
   },
   "profile": {
     "name": "MoZGi",
@@ -16,9 +24,9 @@
     "location": "Москва"
   },
   "links": [
-    { "label": "Telegram", "url": "https://t.me/qMoZGi",      "icon": "telegram", "emoji": "✈️" },
-    { "label": "VK",       "url": "https://vk.com/maxvanila", "icon": "vk",       "emoji": "🧿" },
-    { "label": "GitHub",   "url": "https://github.com/MoZGiq","icon": "github",   "emoji": "🐱" },
-    { "label": "YouTube",  "url": "https://www.youtube.com/@maxVanila", "icon": "youtube",  "emoji": "▶️" }
+    { "label": "Telegram", "url": "https://t.me/qMoZGi",      "icon": "telegram" },
+    { "label": "VK",       "url": "https://vk.com/maxvanila", "icon": "vk" },
+    { "label": "GitHub",   "url": "https://github.com/MoZGiq","icon": "github" },
+    { "label": "YouTube",  "url": "https://www.youtube.com/", "icon": "youtube" }
   ]
 }
