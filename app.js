@@ -31,38 +31,18 @@
   setOG('og:image', cfg.site?.ogImage || 'assets/og-banner.png');
   setOG('og:url', cfg.site?.shareUrl || location.href);
 
+  // Фон (GIF/картинка из конфига)
+  applyBackground(cfg.site);
+
   // Тема и акцент
   const themePref = readTheme(cfg.site?.theme || 'auto');
   applyTheme(themePref);
   if (cfg.site?.accentColor) document.documentElement.style.setProperty('--accent', cfg.site.accentColor);
 
-  // Ссылки (основной список)
+  // Ссылки
   const list = $('links');
   const links = Array.isArray(cfg.links) ? cfg.links : [];
   list.innerHTML = links.map(renderLink).join('');
-
-  // Подмешиваем брендовые тона в плитки
-  Array.from(list.querySelectorAll('a[data-brand]')).forEach(a => {
-    const hex = a.dataset.brand;
-    const rgba = hexToRgba(hex, 0.16);
-    a.style.setProperty('--tint', rgba);
-  });
-
-  // Эмодзи‑панель быстрых ссылок
-  const quick = document.getElementById('quick');
-  const emojiBar = document.getElementById('emojiBar');
-  if (emojiBar) {
-    const emojiLinks = links.filter(l => l.emoji);
-    if (emojiLinks.length) {
-      emojiBar.innerHTML = emojiLinks.map(renderEmojiBtn).join('');
-      quick.hidden = false;
-      Array.from(emojiBar.querySelectorAll('a[data-brand]')).forEach(a => {
-        const hex = a.dataset.brand;
-        const rgba = hexToRgba(hex, 0.18);
-        a.style.setProperty('--tint', rgba);
-      });
-    }
-  }
 
   // Кнопки действий
   const shareBtn = $('share');
@@ -98,30 +78,15 @@
     const url = ln.url || '#';
     const label = ln.label || url;
     const icon = iconMarkup(ln.icon, url);
-    const brand = ln.color || guessBrandColor(ln.icon, url);
     const rel = url.startsWith('http') ? 'noopener noreferrer' : '';
     const target = url.startsWith('http') ? '_blank' : '_self';
-    const brandAttr = brand ? ` data-brand="${escapeHtml(brand)}"` : '';
     return `
       <li>
-        <a href="${escapeHtml(url)}" target="${target}" rel="${rel}"${brandAttr} style="${brand ? `--brand:${brand}` : ''}">
+        <a href="${escapeHtml(url)}" target="${target}" rel="${rel}">
           <span class="i">${icon}</span>
           <span class="l">${escapeHtml(label)}</span>
         </a>
       </li>`;
-  }
-
-  function renderEmojiBtn(ln) {
-    const url = ln.url || '#';
-    const label = ln.label || url;
-    const emoji = ln.emoji || '🔗';
-    const brand = ln.color || guessBrandColor(ln.icon, url);
-    const rel = url.startsWith('http') ? 'noopener noreferrer' : '';
-    const target = url.startsWith('http') ? '_blank' : '_self';
-    const brandAttr = brand ? ` data-brand="${escapeHtml(brand)}"` : '';
-    return `<li>
-      <a href="${escapeHtml(url)}" target="${target}" rel="${rel}" title="${escapeHtml(label)}" aria-label="${escapeHtml(label)}"${brandAttr}>${escapeHtml(emoji)}</a>
-    </li>`;
   }
 
   function setOG(property, content) {
@@ -132,6 +97,27 @@
       document.head.appendChild(m);
     }
     m.setAttribute('content', content);
+  }
+
+  function applyBackground(site) {
+    const raw = site?.background || site?.backgroundImage; // поддержка обоих вариантов
+    if (!raw) return;
+
+    // Нормализуем в объект
+    const bg = typeof raw === 'string' ? { image: raw } : raw;
+    const img = bg.image || bg.url || bg.src;
+    if (!img) return;
+
+    const el = document.getElementById('bgImage');
+    if (!el) return;
+
+    document.documentElement.classList.add('has-bg-image');
+    el.hidden = false;
+    el.style.backgroundImage = `url('${String(img).replace(/'/g, "\\'")}')`;
+    el.style.backgroundSize = (bg.fit === 'contain') ? 'contain' : 'cover';
+    if (bg.position) el.style.backgroundPosition = bg.position;
+    if (bg.blur != null) el.style.setProperty('--bg-blur', `${Number(bg.blur) || 0}px`);
+    if (bg.overlay != null) el.style.setProperty('--overlay', String(bg.overlay));
   }
 
   function applyTheme(mode) {
@@ -176,52 +162,6 @@
       <path d="M10.5 13.5 9 15a5 5 0 0 1-7-7l2-2a5 5 0 0 1 7 7"/>
       <path d="M13.5 10.5 15 9a5 5 0 1 1 7 7l-2 2a5 5 0 0 1-7-7"/>
     </svg>`;
-  }
-
-  function hexToRgba(hex, a=0.16) {
-    const m = (hex || '').replace('#','');
-    if (![3,6].includes(m.length)) return `rgba(124,58,237,${a})`;
-    const n = m.length === 3 ? m.split('').map(s=>s+s).join('') : m;
-    const r = parseInt(n.slice(0,2),16);
-    const g = parseInt(n.slice(2,4),16);
-    const b = parseInt(n.slice(4,6),16);
-    return `rgba(${r}, ${g}, ${b}, ${a})`;
-  }
-
-  function guessBrandColor(iconName='', url='') {
-    const map = {
-      telegram:'#26A5E4',
-      instagram:'#E4405F',
-      vk:'#0077FF',
-      github:'#24292F',
-      youtube:'#FF0000',
-      tiktok:'#000000',
-      discord:'#5865F2',
-      x:'#000000',
-      twitter:'#1D9BF0',
-      reddit:'#FF4500',
-      spotify:'#1DB954',
-      facebook:'#1877F2',
-      whatsapp:'#25D366',
-      twitch:'#9146FF',
-      steam:'#1B2838',
-      pinterest:'#E60023',
-      snapchat:'#FFFC00',
-      soundcloud:'#FF5500',
-      dribbble:'#EA4C89',
-      behance:'#1769FF',
-      medium:'#12100E',
-      notion:'#000000',
-      link:'#7c3aed',
-      email:'#7c3aed'
-    };
-    const key = (iconName || domainToKey(url) || '').toLowerCase();
-    return map[key] || '';
-  }
-
-  function domainToKey(url) {
-    try { return new URL(url).hostname.split('.').slice(-2,-1)[0]; }
-    catch { return ''; }
   }
 
   function escapeHtml(s) {
