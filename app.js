@@ -34,10 +34,8 @@
   // Фон (GIF/картинка из конфига)
   applyBackground(cfg.site);
 
-  // Тема и акцент
-  const themePref = readTheme(cfg.site?.theme || 'auto');
-  applyTheme(themePref);
-  if (cfg.site?.accentColor) document.documentElement.style.setProperty('--accent', cfg.site.accentColor);
+  // ТОЛЬКО тёмная тема
+  applyTheme('dark');
 
   // Ссылки
   const list = $('links');
@@ -63,14 +61,6 @@
     const url = cfg.site?.shareUrl || location.href;
     await copyToClipboard(url);
     feedback(copyBtn, 'Скопировано ✔');
-  });
-
-  const themeBtn = $('theme');
-  themeBtn.addEventListener('click', () => {
-    const current = readTheme(localStorage.getItem('theme') || themePref);
-    const next = current === 'dark' ? 'light' : current === 'light' ? 'auto' : 'dark';
-    localStorage.setItem('theme', next);
-    applyTheme(next);
   });
 
   // ——— helpers ———
@@ -100,10 +90,8 @@
   }
 
   function applyBackground(site) {
-    const raw = site?.background || site?.backgroundImage; // поддержка обоих вариантов
+    const raw = site?.background || site?.backgroundImage;
     if (!raw) return;
-
-    // Нормализуем в объект
     const bg = typeof raw === 'string' ? { image: raw } : raw;
     const img = bg.image || bg.url || bg.src;
     if (!img) return;
@@ -121,14 +109,9 @@
   }
 
   function applyTheme(mode) {
-    document.documentElement.setAttribute('data-theme', mode);
-    const dark = mode === 'dark' || (mode === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.setAttribute('data-theme', 'dark');
     const themeMeta = document.querySelector('#theme-color');
-    themeMeta?.setAttribute('content', dark ? '#0b0b0f' : '#ffffff');
-  }
-
-  function readTheme(x) {
-    return ['auto','light','dark'].includes(x) ? x : 'auto';
+    themeMeta?.setAttribute('content', '#0b0b0f');
   }
 
   async function copyToClipboard(text) {
@@ -148,7 +131,6 @@
     if (['mail','email','e-mail'].includes(key)) return mailIcon();
     if (['link','website','globe','site'].includes(key)) return chainIcon();
     const safe = encodeURIComponent(key);
-    // Simple Icons CDN (CC0)
     return `<img class="icon" src="https://cdn.simpleicons.org/${safe}/ffffff" alt="" loading="lazy" decoding="async" />`;
   }
 
