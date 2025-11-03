@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твоё Имя - Био</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Подключаем иконки с Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="theme-acid"> <!-- Тема по умолчанию -->
+
+    <!-- ======== КАРТОЧКА С БИО ======== -->
+    <div class="card">
+        <!-- !! ИЗМЕНИТЕ ЭТО: Укажите ссылку на ваш аватар -->
+        <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Аватар" class="avatar">
+
+        <!-- !! ИЗМЕНИТЕ ЭТО: Ваше имя или никнейм -->
+        <h1>Твоё Имя</h1>
+
+        <!-- !! ИЗМЕНИТЕ ЭТО: Ваше короткое био -->
+        <p>Программист / Дизайнер / Мечтатель</p>
+
+        <!-- !! ИЗМЕНИТЕ ЭТО: Добавьте/удалите/измените ссылки на свои соцсети -->
+        <div class="social-icons">
+            <a href="https://github.com/your-username" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://t.me/your-username" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+            <a href="https://vk.com/your-username" target="_blank" aria-label="VK"><i class="fab fa-vk"></i></a>
+            <a href="mailto:your-email@example.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            <!-- Чтобы добавить новую иконку, найдите её на Font Awesome и вставьте сюда по аналогии -->
+        </div>
+    </div>
+
+    <!-- ======== ПАНЕЛЬ УПРАВЛЕНИЯ ТЕМОЙ ======== -->
+    <div class="controls-panel">
+        <!-- Пресеты тем -->
+        <div class="theme-switcher">
+            <button data-theme="theme-acid" aria-label="Кислотная тема"></button>
+            <button data-theme="theme-pink-purple" aria-label="Розово-фиолетовая тема"></button>
+            <button data-theme="theme-neon" aria-label="Неоновая тема"></button>
+        </div>
+        <!-- Кастомный фон -->
+        <div class="custom-bg-controls">
+            <input type="text" id="custom-bg-input" placeholder="URL картинки для фона...">
+            <button id="apply-bg-btn">OK</button>
+            <button id="reset-bg-btn">Сброс</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
